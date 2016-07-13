@@ -29,6 +29,8 @@
         /// </summary>
         public const int GraceToUpdateEnochian = 1700;
 
+        private const string[] machingTextToEnochianOn = 
+
         /// <summary>
         /// エノキアン効果中か？
         /// </summary>
@@ -244,7 +246,8 @@
                 return;
             }
 
-            if (log.Contains("Welcome to"))
+            if (log.Contains("Welcome to") ||
+                log.Contains("Willkommen auf"))
             {
                 // プレイヤ情報を取得する
                 var player = FF14PluginHelper.GetCombatantPlayer();
@@ -290,6 +293,7 @@
                 playerNameSaS + "の「エノキアン」",
                 "You use Enochian.",
                 "Vous utilisez Énochien.",
+                "Du setzt Henochisch ein.",
             };
 
             var machingTextToEnochianOff = new string[]
@@ -300,6 +304,7 @@
                 playerNameSaS + "の「エノキアン」が切れた。",
                 "You lose the effect of Enochian.",
                 "Vous perdez l'effet Énochien.",
+                "Du verlierst den Effekt von Henochisch.",
             };
 
             var machingTextToUmbralIceOn = new string[]
@@ -322,6 +327,9 @@
                 "Vous bénéficiez de l'effet Glace ombrale.",
                 "Vous bénéficiez de l'effet Glace ombrale II.",
                 "Vous bénéficiez de l'effet Glace ombrale III.",
+                "Du erhältst den Effekt von Schatteneis.",
+                "Du erhältst den Effekt von Schatteneis II.",
+                "Du erhältst den Effekt von Schatteneis III.",
             };
 
             var machingTextToUmbralIceOff = new string[]
@@ -344,6 +352,9 @@
                 "Vous perdez l'effet Glace ombrale.",
                 "Vous perdez l'effet Glace ombrale II.",
                 "Vous perdez l'effet Glace ombrale III.",
+                "Du verlierst den Effekt von Schatteneis.",
+                "Du verlierst den Effekt von Schatteneis II.",
+                "Du verlierst den Effekt von Schatteneis III.",
             };
 
             var machingTextToBlizzard4 = new string[]
@@ -354,6 +365,7 @@
                 playerNameSaS + "の「ブリザジャ」",
                 "You cast Blizzard IV.",
                 "Vous lancez Giga Glace.",
+                "Du wirkst Eiska.",
             };
 
             // エノキアンON？
