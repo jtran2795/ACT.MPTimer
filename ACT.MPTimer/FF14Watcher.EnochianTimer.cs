@@ -29,8 +29,6 @@
         /// </summary>
         public const int GraceToUpdateEnochian = 1700;
 
-        private const string[] machingTextToEnochianOn = 
-
         /// <summary>
         /// エノキアン効果中か？
         /// </summary>
