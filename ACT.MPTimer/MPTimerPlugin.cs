@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     using ACT.MPTimer.Properties;
@@ -38,8 +39,14 @@
 
                 pluginScreenSpace.Text = "MPTimer";
 
+                // 設定Panelを追加する
+                pluginScreenSpace.Controls.Add(ConfigPanel.Default);
+
                 // アップデートを確認する
-                this.Update();
+                Task.Run(() =>
+                {
+                    this.Update();
+                });
 
                 // オーバーレイを表示する
                 MPTimerWindow.Default.Show();
@@ -47,9 +54,6 @@
 
                 // FF14監視スレッドを開始する
                 FF14Watcher.Initialize();
-
-                // 設定Panelを追加する
-                pluginScreenSpace.Controls.Add(ConfigPanel.Default);
 
                 this.PluginStatusLabel = pluginStatusText;
                 this.PluginStatusLabel.Text = "Plugin Started";
