@@ -37,6 +37,7 @@
         {
             this.ReloadSettings();
             this.InCombat = true;
+            this.Visible = true;
         }
 
         public string Label
@@ -329,8 +330,6 @@
                 this.RaisePropertyChanged("ProgressBarBackground");
                 this.RaisePropertyChanged("ProgressBarStroke");
             }
-
-            this.Visible = true;
         }
 
         #region Implementation of INotifyPropertyChanged

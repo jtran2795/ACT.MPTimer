@@ -95,5 +95,11 @@
     <Setting Name="EnochianLabel" Type="System.String" Scope="User">
       <Value Profile="(Default)">Enochian</Value>
     </Setting>
+    <Setting Name="EnabledMPTimer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnabledEnochianTimer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

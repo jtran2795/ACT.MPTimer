@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Windows.Forms;
-
+    using System.Windows.Threading;
     using ACT.MPTimer.Properties;
     using ACT.MPTimer.Utility;
 
@@ -64,6 +64,8 @@
 
                     this.SaveSettings();
 
+                    FF14Watcher.Default.UpdateTargetJobId();
+
                     MPTimerWindow.Reload();
                     MPTimerWindow.Default.Show();
                     EnochianTimerWindow.Reload();
@@ -92,6 +94,8 @@
                     EnochianTimerWindow.Default.Left = Settings.Default.EnochianOverlayLeft;
 
                     this.LoadSettings();
+
+                    FF14Watcher.Default.UpdateTargetJobId();
 
                     MPTimerWindow.Reload();
                     MPTimerWindow.Default.Show();
@@ -195,6 +199,9 @@
             this.EnochianBarShiftOutlineColorButton.BackColor = Settings.Default.EnochianProgressBarOutlineShiftColor;
 
             this.EnochianLabelTextBox.Text = Settings.Default.EnochianLabel;
+
+            this.EnabledMPTimerCheckBox.Checked = Settings.Default.EnabledMPTimer;
+            this.EnabledEnochianTimerCheckBox.Checked = Settings.Default.EnabledEnochianTimer;
         }
 
         /// <summary>
@@ -234,6 +241,9 @@
             Settings.Default.EnochianProgressBarOutlineShiftColor = this.EnochianBarShiftOutlineColorButton.BackColor;
 
             Settings.Default.EnochianLabel = this.EnochianLabelTextBox.Text;
+
+            Settings.Default.EnabledMPTimer = this.EnabledMPTimerCheckBox.Checked;
+            Settings.Default.EnabledEnochianTimer = this.EnabledEnochianTimerCheckBox.Checked;
 
             Settings.Default.Save();
         }
