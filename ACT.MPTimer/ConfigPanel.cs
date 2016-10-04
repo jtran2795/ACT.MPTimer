@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Windows.Forms;
-
+    using System.Windows.Threading;
     using ACT.MPTimer.Properties;
     using ACT.MPTimer.Utility;
 

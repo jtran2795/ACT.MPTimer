@@ -12,22 +12,27 @@
     /// </summary>
     public partial class MPTimerWindow : Window
     {
+        private static object lockObject = new object();
+
         private static MPTimerWindow instance;
 
         public static MPTimerWindow Default
         {
-            get { return instance ?? (instance = new MPTimerWindow()); }
+            get { lock (lockObject) { return instance ?? (instance = new MPTimerWindow()); } }
         }
 
         public static void Reload()
         {
-            if (instance != null)
+            lock (lockObject)
             {
-                instance.Close();
-                instance = null;
-            }
+                if (instance != null)
+                {
+                    instance.Close();
+                    instance = null;
+                }
 
-            instance = new MPTimerWindow();
+                instance = new MPTimerWindow();
+            }
         }
 
         public MPTimerWindow()

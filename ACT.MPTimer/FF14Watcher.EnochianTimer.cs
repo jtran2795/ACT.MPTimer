@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using ACT.MPTimer.Properties;
+    using ACT.MPTimer.Utility;
     using Advanced_Combat_Tracker;
 
     /// <summary>
@@ -91,8 +92,7 @@
             this.enochianTimerStop = false;
             this.inGraceToUpdate = false;
             this.updatedDuringGrace = false;
-            this.enochianTimerTask = new Task(this.AnalyseLogLinesToEnochian);
-            this.enochianTimerTask.Start();
+            this.enochianTimerTask = TaskUtil.StartSTATask(this.AnalyseLogLinesToEnochian);
         }
 
         /// <summary>

@@ -89,6 +89,7 @@
     <Compile Include="Utility\ColorUtility.cs" />
     <Compile Include="Utility\FontUtility.cs" />
     <Compile Include="Utility\OutlineTextBlock.cs" />
+    <Compile Include="Utility\TaskUtil.cs" />
     <Compile Include="Utility\TraceUtility.cs" />
     <Compile Include="VisualSettingControl.cs">
       <SubType>UserControl</SubType>

@@ -12,22 +12,27 @@
     /// </summary>
     public partial class EnochianTimerWindow : Window
     {
+        private static object lockObject = new object();
+
         private static EnochianTimerWindow instance;
 
         public static EnochianTimerWindow Default
         {
-            get { return instance ?? (instance = new EnochianTimerWindow()); }
+            get { lock (lockObject) { return instance ?? (instance = new EnochianTimerWindow()); } }
         }
 
         public static void Reload()
         {
-            if (instance != null)
+            lock (lockObject)
             {
-                instance.Close();
-                instance = null;
-            }
+                if (instance != null)
+                {
+                    instance.Close();
+                    instance = null;
+                }
 
-            instance = new EnochianTimerWindow();
+                instance = new EnochianTimerWindow();
+            }
         }
 
         public EnochianTimerWindow()
