@@ -330,6 +330,12 @@
                 this.RaisePropertyChanged("ProgressBarBackground");
                 this.RaisePropertyChanged("ProgressBarStroke");
             }
+
+            if (Settings.Default.EnabledEnochianTimer &&
+                FF14Watcher.Default.EnabledByJobFilter)
+            {
+                this.Visible = true;
+            }
         }
 
         #region Implementation of INotifyPropertyChanged
