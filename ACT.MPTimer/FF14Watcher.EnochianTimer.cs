@@ -165,15 +165,8 @@
                     }
 
                     // エノキアンタイマーが無効？
-                    if (!Settings.Default.EnabledEnochianTimer)
-                    {
-                        vm.Visible = false;
-                        Thread.Sleep(Settings.Default.ParameterRefreshRate);
-                        continue;
-                    }
-
-                    // ジョブフィルタを設定する
-                    if (!this.EnabledByJobFilter)
+                    if (!Settings.Default.EnabledEnochianTimer ||
+                        !this.EnabledByJobFilter)
                     {
                         vm.Visible = false;
                         Thread.Sleep(Settings.Default.ParameterRefreshRate);

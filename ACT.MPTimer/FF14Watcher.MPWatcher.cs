@@ -67,14 +67,18 @@
         {
             get
             {
-                if (this.LastPlayerInfo == null)
-                {
-                    return false;
-                }
-
                 if (Settings.Default.TargetJobId == 0)
                 {
                     return true;
+                }
+
+                if (this.LastPlayerInfo == null)
+                {
+#if !DEBUG
+                    return false;
+#else
+                    return true;
+#endif
                 }
 
                 if (this.targetJobId < 0)
@@ -193,7 +197,7 @@
 #endif
                 }
 
-                #region Logger
+#region Logger
 
                 // ログを出力する
                 if ((now - this.lastLoggingDateTime).TotalMinutes >= 30.0d)
@@ -215,7 +219,7 @@
                     this.lastLoggingDateTime = now;
                 }
 
-                #endregion
+#endregion
             }
 
             if (this.NextRecoveryDateTime <= DateTime.MinValue)
