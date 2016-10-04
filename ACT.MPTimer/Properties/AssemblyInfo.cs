@@ -13,5 +13,15 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("c20f6424-6b5a-492b-840f-e80b1c90fe31")]
 
+<<<<<<< HEAD
 [assembly: AssemblyVersion("1.5.0.10")]
 [assembly: AssemblyFileVersion("1.5.0.10")]
+=======
+<<<<<<< HEAD
+[assembly: AssemblyVersion("1.5.0.12")]
+[assembly: AssemblyFileVersion("1.5.0.12")]
+=======
+[assembly: AssemblyVersion("1.5.0.19")]
+[assembly: AssemblyFileVersion("1.5.0.19")]
+>>>>>>> efc459c... バージョンアップ
+>>>>>>> 69841a2... commit
