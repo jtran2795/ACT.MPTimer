@@ -13,29 +13,9 @@
     public partial class FF14Watcher
     {
         /// <summary>
-        /// 最後に回復した日時
+        /// 最後にログを出力した日時
         /// </summary>
-        public DateTime LastRecoveryDateTime { get; private set; }
-
-        /// <summary>
-        /// 次に回復するであろう日時
-        /// </summary>
-        public DateTime NextRecoveryDateTime { get; private set; }
-
-        /// <summary>
-        /// 最後にMPが満タンになった日時
-        /// </summary>
-        public DateTime LastMPFullDateTime { get; private set; }
-
-        /// <summary>
-        /// 最後に取得したプレイヤー情報
-        /// </summary>
-        public Combatant LastPlayerInfo { get; private set; }
-
-        /// <summary>
-        /// 直前のMP
-        /// </summary>
-        private int PreviousMP { get; set; }
+        private DateTime lastLoggingDateTime;
 
         /// <summary>
         /// MP回復量を記録した辞書
@@ -43,22 +23,9 @@
         private Dictionary<int, int[]> MPRecoveryAmounts = new Dictionary<int, int[]>();
 
         /// <summary>
-        /// 最後にログを出力した日時
-        /// </summary>
-        private DateTime lastLoggingDateTime;
-
-        /// <summary>
         /// ジョブフィルタによる対象ジョブID
         /// </summary>
         private int targetJobId = -1;
-
-        /// <summary>
-        /// 対象ジョブIDを更新する
-        /// </summary>
-        public void UpdateTargetJobId()
-        {
-            this.targetJobId = Settings.Default.TargetJobId;
-        }
 
         /// <summary>
         /// ジョブフィルタによるMPタイマー及びエノキアンタイマーの有効性
@@ -88,6 +55,39 @@
 
                 return this.LastPlayerInfo.Job == this.targetJobId;
             }
+        }
+
+        /// <summary>
+        /// 最後にMPが満タンになった日時
+        /// </summary>
+        public DateTime LastMPFullDateTime { get; private set; }
+
+        /// <summary>
+        /// 最後に取得したプレイヤー情報
+        /// </summary>
+        public Combatant LastPlayerInfo { get; private set; }
+
+        /// <summary>
+        /// 最後に回復した日時
+        /// </summary>
+        public DateTime LastRecoveryDateTime { get; private set; }
+
+        /// <summary>
+        /// 次に回復するであろう日時
+        /// </summary>
+        public DateTime NextRecoveryDateTime { get; private set; }
+
+        /// <summary>
+        /// 直前のMP
+        /// </summary>
+        private int PreviousMP { get; set; }
+
+        /// <summary>
+        /// 対象ジョブIDを更新する
+        /// </summary>
+        public void UpdateTargetJobId()
+        {
+            this.targetJobId = Settings.Default.TargetJobId;
         }
 
         /// <summary>
@@ -197,7 +197,7 @@
 #endif
                 }
 
-#region Logger
+                #region Logger
 
                 // ログを出力する
                 if ((now - this.lastLoggingDateTime).TotalMinutes >= 30.0d)
@@ -219,7 +219,7 @@
                     this.lastLoggingDateTime = now;
                 }
 
-#endregion
+                #endregion Logger
             }
 
             if (this.NextRecoveryDateTime <= DateTime.MinValue)

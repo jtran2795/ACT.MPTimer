@@ -11,44 +11,14 @@
     public static partial class FF14PluginHelper
     {
         /// <summary>
-        /// プレイヤー情報
-        /// </summary>
-        private static Combatant player;
-
-        /// <summary>
         /// プレイヤー情報を最後に取得した日時
         /// </summary>
         private static DateTime lastPlayerDateTime = DateTime.MinValue;
 
         /// <summary>
-        /// プレイヤー情報を取得する
+        /// プレイヤー情報
         /// </summary>
-        /// <returns>プレイヤー情報</returns>
-        public static Combatant GetPlayer()
-        {
-            // 3分以上経過した？
-            if (player == null ||
-                lastPlayerDateTime <= DateTime.MinValue ||
-                (DateTime.Now - lastPlayerDateTime).TotalMinutes >= 3.0d)
-            {
-                RefreshPlayer();
-            }
-
-            return player;
-        }
-
-        /// <summary>
-        /// プレイヤ情報をリフレッシュする
-        /// </summary>
-        public static void RefreshPlayer()
-        {
-            var list = FF14PluginHelper.GetCombatantList();
-            if (list.Count > 0)
-            {
-                player = list[0];
-                lastPlayerDateTime = DateTime.Now;
-            }
-        }
+        private static Combatant player;
 
         /// <summary>
         /// パーティの戦闘メンバリストを取得する
@@ -87,6 +57,36 @@
             }
 
             return combatListParty;
+        }
+
+        /// <summary>
+        /// プレイヤー情報を取得する
+        /// </summary>
+        /// <returns>プレイヤー情報</returns>
+        public static Combatant GetPlayer()
+        {
+            // 3分以上経過した？
+            if (player == null ||
+                lastPlayerDateTime <= DateTime.MinValue ||
+                (DateTime.Now - lastPlayerDateTime).TotalMinutes >= 3.0d)
+            {
+                RefreshPlayer();
+            }
+
+            return player;
+        }
+
+        /// <summary>
+        /// プレイヤ情報をリフレッシュする
+        /// </summary>
+        public static void RefreshPlayer()
+        {
+            var list = FF14PluginHelper.GetCombatantList();
+            if (list.Count > 0)
+            {
+                player = list[0];
+                lastPlayerDateTime = DateTime.Now;
+            }
         }
     }
 }

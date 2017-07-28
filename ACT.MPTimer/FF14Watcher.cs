@@ -22,11 +22,6 @@
         private static FF14Watcher instance;
 
         /// <summary>
-        /// 監視タスク
-        /// </summary>
-        private Task watchTask;
-
-        /// <summary>
         /// 処理中か？
         /// </summary>
         private bool isWorking;
@@ -42,6 +37,11 @@
         private DateTime lastRebootDispatcherDateTime = DateTime.MinValue;
 
         /// <summary>
+        /// 監視タスク
+        /// </summary>
+        private Task watchTask;
+
+        /// <summary>
         /// シングルトンインスタンス
         /// </summary>
         public static FF14Watcher Default
@@ -50,27 +50,6 @@
             {
                 FF14Watcher.Initialize();
                 return instance;
-            }
-        }
-
-        /// <summary>
-        /// 初期化する
-        /// </summary>
-        public static void Initialize()
-        {
-            if (instance == null)
-            {
-                instance = new FF14Watcher()
-                {
-                    PreviousMP = -1
-                };
-
-                // 監視タスクを開始する
-                instance.isWorking = true;
-                instance.watchTask = TaskUtil.StartSTATask(instance.WatchCore);
-
-                // エノキアンタイマーを開始する
-                instance.StartEnochianTimer();
             }
         }
 
@@ -94,6 +73,27 @@
                 }
 
                 instance = null;
+            }
+        }
+
+        /// <summary>
+        /// 初期化する
+        /// </summary>
+        public static void Initialize()
+        {
+            if (instance == null)
+            {
+                instance = new FF14Watcher()
+                {
+                    PreviousMP = -1
+                };
+
+                // 監視タスクを開始する
+                instance.isWorking = true;
+                instance.watchTask = TaskUtil.StartSTATask(instance.WatchCore);
+
+                // エノキアンタイマーを開始する
+                instance.StartEnochianTimer();
             }
         }
 

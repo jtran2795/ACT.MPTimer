@@ -11,19 +11,19 @@ namespace ACT.MPTimer
         public static readonly double MPRecoverySpan = Settings.Default.MPRecoveryInterval;
 
         /// <summary>
-        /// MP回復割
+        /// MP回復割合
         /// </summary>
         public static class MPRecoveryRate
         {
             /// <summary>
-            /// 通常(非戦闘時)
-            /// </summary>
-            public const double Normal = 0.06d;
-
-            /// <summary>
             /// 戦闘中
             /// </summary>
             public const double InCombat = 0.02d;
+
+            /// <summary>
+            /// 通常(非戦闘時)
+            /// </summary>
+            public const double Normal = 0.06d;
 
             /// <summary>
             /// アンブラルブリザード1による増量

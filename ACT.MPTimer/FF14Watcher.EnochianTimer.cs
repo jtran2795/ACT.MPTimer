@@ -16,14 +16,14 @@
     public partial class FF14Watcher
     {
         /// <summary>
-        /// エノキアンの効果期間
-        /// </summary>
-        public const double EnochianDuration = 30.0d;
-
-        /// <summary>
         /// エノキアンの延長時の効果期間の劣化量
         /// </summary>
         public const double EnochianDegradationSecondsExtending = 5.0d;
+
+        /// <summary>
+        /// エノキアンの効果期間
+        /// </summary>
+        public const double EnochianDuration = 30.0d;
 
         /// <summary>
         /// エノキアンOFF後にエノキアンの更新を受付ける猶予期間（ms）
@@ -31,24 +31,9 @@
         public const int GraceToUpdateEnochian = 1700;
 
         /// <summary>
-        /// エノキアン効果中か？
+        /// エノキアンタイマー停止フラグ
         /// </summary>
-        private bool inEnochian;
-
-        /// <summary>
-        /// アンブラルアイス中か？
-        /// </summary>
-        private bool inUmbralIce;
-
-        /// <summary>
-        /// エノキアンの更新回数
-        /// </summary>
-        private long updateEnchianCount;
-
-        /// <summary>
-        /// ログキュー
-        /// </summary>
-        private Queue<string> logQueue = new Queue<string>();
+        private bool enochianTimerStop;
 
         /// <summary>
         /// エノキアンタイマータスク
@@ -56,14 +41,9 @@
         private Task enochianTimerTask;
 
         /// <summary>
-        /// エノキアンタイマー停止フラグ
+        /// エノキアン効果中か？
         /// </summary>
-        private bool enochianTimerStop;
-
-        /// <summary>
-        /// プレイヤーの名前
-        /// </summary>
-        private string playerName;
+        private bool inEnochian;
 
         /// <summary>
         /// エノキアンの更新猶予期間
@@ -71,9 +51,9 @@
         private bool inGraceToUpdate;
 
         /// <summary>
-        /// 猶予期間中に更新されたか？
+        /// アンブラルアイス中か？
         /// </summary>
-        private bool updatedDuringGrace;
+        private bool inUmbralIce;
 
         /// <summary>
         /// 最後のエノキアンの残り時間イベント
@@ -81,61 +61,24 @@
         private string lastRemainingTimeOfEnochian;
 
         /// <summary>
-        /// エノキアンタイマーを開始する
+        /// ログキュー
         /// </summary>
-        private void StartEnochianTimer()
-        {
-            ActGlobals.oFormActMain.OnLogLineRead += this.OnLoglineRead;
-            this.playerName = string.Empty;
-            this.lastRemainingTimeOfEnochian = string.Empty;
-            this.logQueue.Clear();
-            this.enochianTimerStop = false;
-            this.inGraceToUpdate = false;
-            this.updatedDuringGrace = false;
-            this.enochianTimerTask = TaskUtil.StartSTATask(this.AnalyseLogLinesToEnochian);
-        }
+        private Queue<string> logQueue = new Queue<string>();
 
         /// <summary>
-        /// エノキアンタイマーを終了する
+        /// プレイヤーの名前
         /// </summary>
-        private void EndEnochianTimer()
-        {
-            ActGlobals.oFormActMain.OnLogLineRead -= this.OnLoglineRead;
-
-            if (this.enochianTimerTask != null)
-            {
-                this.enochianTimerStop = true;
-                this.enochianTimerTask.Wait();
-                this.enochianTimerTask.Dispose();
-                this.enochianTimerTask = null;
-            }
-        }
+        private string playerName;
 
         /// <summary>
-        ///  Logline Read
+        /// 猶予期間中に更新されたか？
         /// </summary>
-        /// <param name="isImport">インポートログか？</param>
-        /// <param name="logInfo">発生したログ情報</param>
-        private void OnLoglineRead(
-            bool isImport,
-            LogLineEventArgs logInfo)
-        {
-            if (isImport)
-            {
-                return;
-            }
+        private bool updatedDuringGrace;
 
-            // エノキアンタイマーが有効ならば・・・
-            if (Settings.Default.EnabledEnochianTimer &&
-                this.EnabledByJobFilter)
-            {
-                // ログをキューに貯める
-                lock (this.logQueue)
-                {
-                    this.logQueue.Enqueue(logInfo.logLine);
-                }
-            }
-        }
+        /// <summary>
+        /// エノキアンの更新回数
+        /// </summary>
+        private long updateEnchianCount;
 
         /// <summary>
         /// エノキアンタイマー向けにログを分析する
@@ -260,19 +203,19 @@
             var firstName = names.Length > 0 ? names[0].Trim() : string.Empty;
             var familyName = names.Length > 1 ? names[1].Trim() : string.Empty;
 
-            var playerNameSaL = 
-                firstName.Substring(0, 1) + "." + 
-                " " + 
+            var playerNameSaL =
+                firstName.Substring(0, 1) + "." +
+                " " +
                 familyName;
 
-            var playerNameLaS = 
-                firstName + 
-                " " + 
+            var playerNameLaS =
+                firstName +
+                " " +
                 familyName.Substring(0, 1) + ".";
 
-            var playerNameSaS = 
-                firstName.Substring(0, 1) + "." + 
-                " " + 
+            var playerNameSaS =
+                firstName.Substring(0, 1) + "." +
+                " " +
                 familyName.Substring(0, 1) + ".";
 
             // 各種マッチング用の文字列を生成する
@@ -461,6 +404,63 @@
                     return;
                 }
             }
+        }
+
+        /// <summary>
+        /// エノキアンタイマーを終了する
+        /// </summary>
+        private void EndEnochianTimer()
+        {
+            ActGlobals.oFormActMain.OnLogLineRead -= this.OnLoglineRead;
+
+            if (this.enochianTimerTask != null)
+            {
+                this.enochianTimerStop = true;
+                this.enochianTimerTask.Wait();
+                this.enochianTimerTask.Dispose();
+                this.enochianTimerTask = null;
+            }
+        }
+
+        /// <summary>
+        ///  Logline Read
+        /// </summary>
+        /// <param name="isImport">インポートログか？</param>
+        /// <param name="logInfo">発生したログ情報</param>
+        private void OnLoglineRead(
+            bool isImport,
+            LogLineEventArgs logInfo)
+        {
+            if (isImport)
+            {
+                return;
+            }
+
+            // エノキアンタイマーが有効ならば・・・
+            if (Settings.Default.EnabledEnochianTimer &&
+                this.EnabledByJobFilter)
+            {
+                // ログをキューに貯める
+                lock (this.logQueue)
+                {
+                    this.logQueue.Enqueue(logInfo.logLine);
+                }
+            }
+        }
+
+        /// <summary>
+        /// エノキアンタイマーを開始する
+        /// </summary>
+        private void StartEnochianTimer()
+        {
+            ActGlobals.oFormActMain.OnLogLineRead += this.OnLoglineRead;
+            this.playerName = string.Empty;
+            this.lastRemainingTimeOfEnochian = string.Empty;
+            this.logQueue.Clear();
+            this.enochianTimerStop = false;
+            this.inGraceToUpdate = false;
+            this.updatedDuringGrace = false;
+            this.enochianTimerTask = TaskUtil.StartSTATask(this.AnalyseLogLinesToEnochian);
         }
 
         /// <summary>

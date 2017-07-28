@@ -1,7 +1,6 @@
 ﻿namespace ACT.MPTimer.Utility
 {
     using System;
-    using System.Windows.Forms;
 
     using Advanced_Combat_Tracker;
 
@@ -22,10 +21,7 @@
             {
                 if (ActGlobals.oFormActMain.InvokeRequired)
                 {
-                    ActGlobals.oFormActMain.Invoke((MethodInvoker)delegate
-                    {
-                        action();
-                    });
+                    ActGlobals.oFormActMain.Invoke(action);
                 }
                 else
                 {

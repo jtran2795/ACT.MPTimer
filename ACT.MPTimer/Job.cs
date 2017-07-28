@@ -7,6 +7,11 @@
     /// </summary>
     public class Job
     {
+        /// <summary>
+        /// ジョブリスト
+        /// </summary>
+        private static List<Job> jobList;
+
         private static object lockObject = new object();
 
         /// <summary>
@@ -18,11 +23,6 @@
         /// JobName
         /// </summary>
         public string JobName { get; set; }
-
-        /// <summary>
-        /// ジョブリスト
-        /// </summary>
-        private static List<Job> jobList;
 
         /// <summary>
         /// ジョブリストを取得する
@@ -71,6 +71,8 @@
                     list.Add(new Job() { JobId = 31, JobName = "機工士" });
                     list.Add(new Job() { JobId = 32, JobName = "暗黒騎士" });
                     list.Add(new Job() { JobId = 33, JobName = "占星術師" });
+                    list.Add(new Job() { JobId = 34, JobName = "侍" });
+                    list.Add(new Job() { JobId = 35, JobName = "赤魔道士" });
 
                     jobList = list;
                 }

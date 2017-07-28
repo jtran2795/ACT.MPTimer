@@ -12,24 +12,23 @@
     [Export(typeof(MPTimerWindowViewModel))]
     public class MPTimerWindowViewModel : INotifyPropertyChanged
     {
-        private double opacity;
-        private double timeToRecovery = default(double);
-        private SolidColorBrush progressBarForeground;
-        private SolidColorBrush progressBarBackground;
-        private SolidColorBrush progressBarStroke;
         private SolidColorBrush fontFill;
         private SolidColorBrush fontStroke;
-        private double progressBarForegroundWidth;
-        private string timeToRecoveryText;
         private bool inCombat;
-        private bool visible;
-
-        private SolidColorBrush progressBarForegroundDefault;
+        private double opacity;
+        private SolidColorBrush progressBarBackground;
         private SolidColorBrush progressBarBackgroundDefault;
-        private SolidColorBrush progressBarStrokeDefault;
-        private SolidColorBrush progressBarForegroundShift;
         private SolidColorBrush progressBarBackgroundShift;
+        private SolidColorBrush progressBarForeground;
+        private SolidColorBrush progressBarForegroundDefault;
+        private SolidColorBrush progressBarForegroundShift;
+        private double progressBarForegroundWidth;
+        private SolidColorBrush progressBarStroke;
+        private SolidColorBrush progressBarStrokeDefault;
         private SolidColorBrush progressBarStrokeShift;
+        private double timeToRecovery = default(double);
+        private string timeToRecoveryText;
+        private bool visible;
 
         public MPTimerWindowViewModel()
         {
@@ -41,6 +40,53 @@
 #endif
         }
 
+        public FontFamily FontFamily
+        {
+            get { return Settings.Default.Font.ToFontFamilyWPF(); }
+        }
+
+        public SolidColorBrush FontFill
+        {
+            get { return this.fontFill; }
+        }
+
+        public double FontSize
+        {
+            get { return Settings.Default.Font.ToFontSizeWPF(); }
+        }
+
+        public SolidColorBrush FontStroke
+        {
+            get { return this.fontStroke; }
+        }
+
+        public double FontStrokeThickness
+        {
+            get { return 0.5d * this.FontSize / 13.0d; }
+        }
+
+        public FontStyle FontStyle
+        {
+            get { return Settings.Default.Font.ToFontStyleWPF(); }
+        }
+
+        public FontWeight FontWeight
+        {
+            get { return Settings.Default.Font.ToFontWeightWPF(); }
+        }
+
+        public bool InCombat
+        {
+            get { return this.inCombat; }
+            set
+            {
+                if (this.inCombat != value)
+                {
+                    this.inCombat = value;
+                    this.RaisePropertyChanged("Opacity");
+                }
+            }
+        }
 
         public double Left
         {
@@ -48,16 +94,6 @@
             set
             {
                 Settings.Default.OverlayLeft = (int)value;
-                this.RaisePropertyChanged();
-            }
-        }
-
-        public double Top
-        {
-            get { return (double)Settings.Default.OverlayTop; }
-            set
-            {
-                Settings.Default.OverlayTop = (int)value;
                 this.RaisePropertyChanged();
             }
         }
@@ -81,30 +117,42 @@
             }
         }
 
-        public bool InCombat
+        public SolidColorBrush ProgressBarBackground
         {
-            get { return this.inCombat; }
+            get { return this.progressBarBackground; }
+        }
+
+        public SolidColorBrush ProgressBarForeground
+        {
+            get { return this.progressBarForeground; }
+        }
+
+        public double ProgressBarForegroundWidth
+        {
+            get { return this.progressBarForegroundWidth; }
             set
             {
-                if (this.inCombat != value)
+                if (this.progressBarForegroundWidth != value)
                 {
-                    this.inCombat = value;
-                    this.RaisePropertyChanged("Opacity");
+                    this.progressBarForegroundWidth = value;
+                    this.RaisePropertyChanged();
                 }
             }
         }
 
-        public bool Visible
+        public double ProgressBarHeight
         {
-            get { return this.visible; }
-            set
-            {
-                if (this.visible != value)
-                {
-                    this.visible = value;
-                    this.RaisePropertyChanged("Opacity");
-                }
-            }
+            get { return Settings.Default.ProgressBarSize.Height; }
+        }
+
+        public SolidColorBrush ProgressBarStroke
+        {
+            get { return this.progressBarStroke; }
+        }
+
+        public double ProgressBarWidth
+        {
+            get { return Settings.Default.ProgressBarSize.Width; }
         }
 
         public double TimeToRecovery
@@ -131,99 +179,38 @@
                     // 残り秒数でプログレスバーの色を変更する
                     if (Settings.Default.ProgressBarShiftTime > 0.0d)
                     {
+                        var fore = default(SolidColorBrush);
+                        var back = default(SolidColorBrush);
+                        var stroke = default(SolidColorBrush);
+
                         if (this.timeToRecovery <= (Settings.Default.ProgressBarShiftTime * 1000d))
                         {
-                            this.progressBarForeground = this.progressBarForegroundShift;
-                            this.progressBarBackground = this.progressBarBackgroundShift;
-                            this.progressBarStroke = this.progressBarStrokeShift;
+                            fore = this.progressBarForegroundShift;
+                            back = this.progressBarBackgroundShift;
+                            stroke = this.progressBarStrokeShift;
                         }
                         else
                         {
-                            this.progressBarForeground = this.progressBarForegroundDefault;
-                            this.progressBarBackground = this.progressBarBackgroundDefault;
-                            this.progressBarStroke = this.progressBarStrokeDefault;
+                            fore = this.progressBarForegroundDefault;
+                            back = this.progressBarBackgroundDefault;
+                            stroke = this.progressBarStrokeDefault;
                         }
 
-                        this.RaisePropertyChanged("ProgressBarForeground");
-                        this.RaisePropertyChanged("ProgressBarBackground");
-                        this.RaisePropertyChanged("ProgressBarStroke");
+                        if (this.progressBarForeground != fore ||
+                            this.progressBarBackground != back ||
+                            this.progressBarStroke != stroke)
+                        {
+                            this.progressBarForeground = fore;
+                            this.progressBarBackground = back;
+                            this.progressBarStroke = stroke;
+
+                            this.RaisePropertyChanged("ProgressBarForeground");
+                            this.RaisePropertyChanged("ProgressBarBackground");
+                            this.RaisePropertyChanged("ProgressBarStroke");
+                        }
                     }
                 }
             }
-        }
-
-        public SolidColorBrush ProgressBarForeground
-        {
-            get { return this.progressBarForeground; }
-        }
-
-
-        public SolidColorBrush ProgressBarBackground
-        {
-            get { return this.progressBarBackground; }
-        }
-
-        public SolidColorBrush ProgressBarStroke
-        {
-            get { return this.progressBarStroke; }
-        }
-
-        public double ProgressBarWidth
-        {
-            get { return Settings.Default.ProgressBarSize.Width; }
-        }
-
-        public double ProgressBarHeight
-        {
-            get { return Settings.Default.ProgressBarSize.Height; }
-        }
-
-        public double ProgressBarForegroundWidth
-        {
-            get { return this.progressBarForegroundWidth; }
-            set
-            {
-                if (this.progressBarForegroundWidth != value)
-                {
-                    this.progressBarForegroundWidth = value;
-                    this.RaisePropertyChanged();
-                }
-            }
-        }
-
-        public FontFamily FontFamily
-        {
-            get { return Settings.Default.Font.ToFontFamilyWPF(); }
-        }
-
-        public double FontSize
-        {
-            get { return Settings.Default.Font.ToFontSizeWPF(); }
-        }
-
-        public FontStyle FontStyle
-        {
-            get { return Settings.Default.Font.ToFontStyleWPF(); }
-        }
-
-        public FontWeight FontWeight
-        {
-            get { return Settings.Default.Font.ToFontWeightWPF(); }
-        }
-
-        public SolidColorBrush FontFill
-        {
-            get { return this.fontFill; }
-        }
-
-        public SolidColorBrush FontStroke
-        {
-            get { return this.fontStroke; }
-        }
-
-        public double FontStrokeThickness
-        {
-            get { return 0.5d * this.FontSize / 13.0d; }
         }
 
         public string TimeToRecoveryText
@@ -235,6 +222,29 @@
                 {
                     this.timeToRecoveryText = value;
                     this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public double Top
+        {
+            get { return (double)Settings.Default.OverlayTop; }
+            set
+            {
+                Settings.Default.OverlayTop = (int)value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public bool Visible
+        {
+            get { return this.visible; }
+            set
+            {
+                if (this.visible != value)
+                {
+                    this.visible = value;
+                    this.RaisePropertyChanged("Opacity");
                 }
             }
         }
@@ -295,6 +305,6 @@
             }
         }
 
-        #endregion
+        #endregion Implementation of INotifyPropertyChanged
     }
 }
