@@ -23,10 +23,12 @@
             });
 
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
 
             return tcs.Task;
         }
+
         public static Task StartSTATask(
             Action action)
         {
@@ -45,6 +47,7 @@
             });
 
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
 
             return tcs.Task;
