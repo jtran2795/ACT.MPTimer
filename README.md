@@ -19,7 +19,7 @@ ACT.MPTimer.dll
 --------------
 [こちらからダウンロードしてください](https://github.com/anoyetta/ACT.MPTimer/releases/latest)  
   
-**ウルスカ（ACT.UltraScouter）に機能を統合しました。**  
+**ウルスカ（ACT.UltraScouter）に機能を統合しました。**  
 **https://github.com/anoyetta/ACT.UltraScouter**
 
   
