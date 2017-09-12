@@ -1,5 +1,7 @@
 ACT.MPTimer
 ===========
+**MPTimerの機能は [ACT.UltraScouter](https://github.com/anoyetta/ACT.UltraScouter) に統合されました。**  
+**このサイトで配布しているものは古いバージョンになります。最新版は上記のリンクから取得してください。**
 
 概要
 -------------
