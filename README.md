@@ -17,8 +17,11 @@ ACT.MPTimer.dll
   
 最新リリース
 --------------
-**[こちらからダウンロードしてください](https://github.com/anoyetta/ACT.MPTimer/releases/latest)**  
+[こちらからダウンロードしてください](https://github.com/anoyetta/ACT.MPTimer/releases/latest)  
   
+**ウルスカ（ACT.UltraScouter）に機能を統合しました。**  
+**https://github.com/anoyetta/ACT.UltraScouter**
+
   
 ライセンス
 --------------
