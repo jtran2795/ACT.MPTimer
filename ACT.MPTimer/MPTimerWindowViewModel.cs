@@ -23,12 +23,16 @@
         private SolidColorBrush progressBarForegroundDefault;
         private SolidColorBrush progressBarForegroundShift;
         private double progressBarForegroundWidth;
+        //private double oldprogressBarForegroundWidth;
+       // private int zInd;
         private SolidColorBrush progressBarStroke;
         private SolidColorBrush progressBarStrokeDefault;
         private SolidColorBrush progressBarStrokeShift;
         private double timeToRecovery = default(double);
+        private double maxMP;
         private string timeToRecoveryText;
         private bool visible;
+        private bool rev;
 
         public MPTimerWindowViewModel()
         {
@@ -139,7 +143,18 @@
                 }
             }
         }
-
+        /*public double oldProgressBarForegroundWidth
+        {
+            get { return this.oldprogressBarForegroundWidth; }
+            set
+            {
+                if (this.oldprogressBarForegroundWidth != value)
+                {
+                    this.oldprogressBarForegroundWidth = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }*/
         public double ProgressBarHeight
         {
             get { return Settings.Default.ProgressBarSize.Height; }
@@ -154,7 +169,31 @@
         {
             get { return Settings.Default.ProgressBarSize.Width; }
         }
-
+        public double MaxMP
+        {
+            get
+            {
+                return this.MaxMP;
+            }
+            set
+            {   if (this.maxMP != value)
+                {
+                    this.maxMP = value;
+                }
+            }
+        }
+        /*public void updateBar()
+        {
+            if (this.rev)
+            {
+                this.progressBarForegroundWidth = this.oldProgressBarForegroundWidth;
+                this.rev = false;
+            }
+            else if(this.oldprogressBarForegroundWidth <= this.progressBarForegroundWidth )
+            {
+                this.oldprogressBarForegroundWidth = this.progressBarForegroundWidth;
+            }
+        }*/
         public double TimeToRecovery
         {
             get { return this.timeToRecovery; }
@@ -166,15 +205,23 @@
 
                     // プログレスバーの幅を計算する
                     var rateOfRecovery =
-                        ((Constants.MPRecoverySpan * 1000d) - this.timeToRecovery) /
-                        (Constants.MPRecoverySpan * 1000d);
-
-                    this.ProgressBarForegroundWidth =
-                        (double)Settings.Default.ProgressBarSize.Width * rateOfRecovery;
+                        (this.timeToRecovery) /
+                        (this.maxMP);
+                    /*if (this.ProgressBarForegroundWidth > (double)Settings.Default.ProgressBarSize.Width * rateOfRecovery) //Losing MP
+                    {
+                        this.rev = true;
+                        this.oldProgressBarForegroundWidth = (double)Settings.Default.ProgressBarSize.Width * rateOfRecovery; 
+                    }
+                    else {*/
+                        //this.oldProgressBarForegroundWidth = this.ProgressBarForegroundWidth;
+                        this.ProgressBarForegroundWidth =
+                            (double)Settings.Default.ProgressBarSize.Width * rateOfRecovery;
+                    //}
+                    
 
                     // 残り秒数の表示を編集する
                     this.TimeToRecoveryText =
-                        (this.timeToRecovery / 1000d).ToString("N1");
+                        (this.timeToRecovery).ToString() + " MP";
 
                     // 残り秒数でプログレスバーの色を変更する
                     if (Settings.Default.ProgressBarShiftTime > 0.0d)

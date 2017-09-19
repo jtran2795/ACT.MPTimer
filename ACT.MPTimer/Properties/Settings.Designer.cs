@@ -49,7 +49,7 @@ namespace ACT.MPTimer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("メイリオ, 9.75pt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ITC Avant Garde Gothic LT Book , 14pt")]
         public global::System.Drawing.Font Font {
             get {
                 return ((global::System.Drawing.Font)(this["Font"]));
@@ -265,7 +265,7 @@ namespace ACT.MPTimer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("メイリオ, 9.75pt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ITC Avant Garde Gothic LT Book , 14pt")]
         public global::System.Drawing.Font EnochianFont {
             get {
                 return ((global::System.Drawing.Font)(this["EnochianFont"]));

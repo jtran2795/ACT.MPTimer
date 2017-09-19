@@ -33,45 +33,46 @@
       Grid.Row="0"
       VerticalAlignment="Top"
       Width="{Binding ElementName=BarBackRectangle, Path=Width, Mode=OneWay}"
-      Height="{Binding ElementName=BarBackRectangle, Path=Height, Mode=OneWay}">
+      Height="{Binding ElementName=BarBackRectangle, Path=Height, Mode=OneWay}"
+      Margin="0,35,0,0">
 
-      <Rectangle
+            <Rectangle
         x:Name="BarBackRectangle"
-        RadiusX="4" RadiusY="4"
+        RadiusX="0" RadiusY="0"
         Width="{Binding ProgressBarWidth}"
         Height="{Binding ProgressBarHeight}"
-        Fill="{Binding ProgressBarBackground}" />
-
-      <Rectangle
+        >
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="mp_bar_back.png" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle
         x:Name="BarRectangle"
         Height="{Binding ElementName=BarBackRectangle, Path=Height, Mode=OneWay}"
         Width="{Binding ProgressBarForegroundWidth}"
-        RadiusX="4" RadiusY="4"
-        Fill="{Binding ProgressBarForeground}">
+        RadiusX="0" RadiusY="0"
+        >
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="drk_mp.png" Stretch="None" AlignmentX="Left" AlignmentY="Top">
+                    </ImageBrush>
+                </Rectangle.Fill>
 
-        <Rectangle.Effect>
-          <DropShadowEffect
-            ShadowDepth="0"
-            BlurRadius="8"
-            RenderingBias="Performance"
-            Color="{Binding ElementName=BarRectangle, Path=Fill.Color}" />
-        </Rectangle.Effect>
-      </Rectangle>
-
-      <Rectangle
+            </Rectangle>
+            <Rectangle
         Width="{Binding ElementName=BarBackRectangle, Path=Width, Mode=OneWay}"
         Height="{Binding ElementName=BarBackRectangle, Path=Height, Mode=OneWay}"
         Stroke="{Binding ProgressBarStroke}"
-        StrokeThickness="1"
-        RadiusX="4" RadiusY="4" />
-    </Canvas>
-
+        StrokeThickness="0"
+        />
+            <Image Source="dark back.png" Margin="0,9,0,0"></Image>
+        </Canvas>
+        
     <Utility:OutlineTextBlock
       Grid.Row="1"
       x:Name="RecastTimeTextBlock"
       HorizontalAlignment="Right"
       VerticalAlignment="Top"
-      Margin="0,0,3,0"
+      Margin="0,-5,5,0"
       TextWrapping="NoWrap"
       Fill="{Binding FontFill}"
       Stroke="{Binding FontStroke}"
@@ -79,7 +80,7 @@
       FontFamily="{Binding FontFamily}"
       FontSize="{Binding FontSize}"
       FontStyle="{Binding FontStyle}"
-      FontWeight="{Binding FontWeight}"
+      FontWeight="Bold"
       Text="{Binding TimeToRecoveryText}">
 
       <Utility:OutlineTextBlock.Effect>
@@ -88,8 +89,10 @@
           ShadowDepth="0"
           BlurRadius="3"
           RenderingBias="Performance"
-          Color="{Binding ElementName=RecastTimeTextBlock, Path=Stroke.Color, Mode=OneWay}" />
+          Opacity="1"
+          Color="{Binding ElementName=RecastTimeTextBlock, Path=Stroke.Color, Mode=OneWay}"  />
       </Utility:OutlineTextBlock.Effect>
+
     </Utility:OutlineTextBlock>
   </Grid>
 </Window>

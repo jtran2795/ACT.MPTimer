@@ -247,7 +247,9 @@
             }
 
             // ViewModelにセットする
-            vm.TimeToRecovery = remain;
+            vm.MaxMP = player.MaxMP;
+            //vm.updateBar();
+            vm.TimeToRecovery = player.CurrentMP;
 
             // 現在のMPを保存する
             this.PreviousMP = player.CurrentMP;
