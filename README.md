@@ -1,6 +1,6 @@
-Purpose: Display an alternative MP bar.
+Purpose: Display an alternative MP bar for DRK.
 
-In development.
+Very early in development. Only works on lowest scale gauge.
 
 =====
 
